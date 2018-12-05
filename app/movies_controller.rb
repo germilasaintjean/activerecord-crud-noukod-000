@@ -23,11 +23,11 @@ def can_be_created_with_a_hash_of_attributes
   movie = __
 end
 
-def can_be_created_in_a_block(args = __)
+def can_be_created_in_a_block(args )
   # If no arguments are passed, use default values:
   # title == "Home Alone"
   # release_date == 1990
-  
+
   Movie.create do |m|
     __
   end
@@ -54,11 +54,12 @@ def can_find_by_multiple_attributes
   # title == "Title"
   # release_date == 2000
   # director == "Me"
-  __
+
 end
 
 def can_find_using_where_clause_and_be_sorted
-  # For this test return all movies released after 2002 and ordered by 
+  "SELECT * FROM movies WHERE ("title", "release_date") ORDER BY DESC"
+  # For this test return all movies released after 2002 and ordered by
   # release date descending
   __
 end
@@ -66,7 +67,7 @@ end
 def can_be_found_updated_and_saved
   # Updtate the title "Awesome Flick" to "Even Awesomer Flick", save it, then return it
   Movie.create(title: "Awesome Flick")
-  __
+  up
   __
   __
 end
@@ -74,27 +75,32 @@ end
 def can_update_using_update_method
   # Update movie title to "Wat, huh?"
   Movie.create(title: "Wat?")
-  __
-  __
-end
+  Movie.UPDATE movies SET title "huh?" WHERE movie.title = "Wat?"
+  
+  end
 
 def can_update_multiple_items_at_once
   # Change title of all movies to "A Movie"
   5.times do |i|
     Movie.create(title: "Movie_#{i}", release_date: 2000+i)
   end
-  __
+
 end
 
 def can_destroy_a_single_item
   Movie.create(title: "That One Where the Guy Kicks Another Guy Once")
-  __
-  __
+  execute <<-SQL
+  DELETE FROM movie
+  WHERE movie = "title"
+  SQL
+
 end
 
 def can_destroy_all_items_at_once
   10.times do |i|
     Movie.create(title: "Movie_#{i}")
   end
-  __
+  def down
+    Movie.delete_all
+  end
 end
